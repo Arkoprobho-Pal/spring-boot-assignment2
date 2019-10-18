@@ -25,7 +25,7 @@ public class TrackController {
     private TrackService trackService;
 
     @Autowired
-    public TrackController(@Qualifier("trackServiceImpl") TrackService trackService) {
+    public TrackController( TrackService trackService) {
         this.trackService = trackService;
     }
     @GetMapping("track/find/{trackName}")
@@ -43,31 +43,34 @@ public class TrackController {
     @PostMapping("track")
     public ResponseEntity<?> saveTrack(@RequestBody Track track)throws TrackAlreadyExistsException{
         ResponseEntity responseEntity;
-//        try {
+        try {
             trackService.saveTrack(track);
             responseEntity=new ResponseEntity<String>("Successfully Track Created", HttpStatus.CREATED);
-//        }catch (TrackAlreadyExistsException ex){
-//            responseEntity=new ResponseEntity<String >(ex.getMessage(),HttpStatus.CONFLICT);
-//        }
+        }catch (TrackAlreadyExistsException ex){
+            responseEntity=new ResponseEntity<String >(ex.getMessage(),HttpStatus.CONFLICT);
+        }
         return responseEntity;
     }
     @PutMapping("track")
-    public  ResponseEntity<?> updateTrackComment(@RequestBody Track track) throws TrackNotFoundException{
+    public  ResponseEntity<?> updateTrackComment(@RequestBody Track track)throws TrackNotFoundException{
         ResponseEntity responseEntity;
-        trackService.updateTrackComment(track);
-            responseEntity=new ResponseEntity<String>("Successfully Track comment Updated", HttpStatus.CREATED);
-
+        try {
+            trackService.updateTrackComment(track);
+            responseEntity = new ResponseEntity<String>("Successfully Track comment Updated", HttpStatus.CREATED);
+        }catch (TrackNotFoundException ex){
+            responseEntity=new ResponseEntity<String >(ex.getMessage(),HttpStatus.NOT_FOUND);
+        }
         return responseEntity;
     }
     @RequestMapping(value = "track",method = RequestMethod.DELETE)
     public ResponseEntity<?> removeTrack(@RequestBody  Track track)throws TrackNotFoundException{
         ResponseEntity responseEntity;
-//        try {
+        try {
             trackService.removeTrack(track);
-            responseEntity=new ResponseEntity<String>("Successfully Track Deleted !!", HttpStatus.CREATED);
-//        }catch (TrackNotFoundException ex){
-//            responseEntity=new ResponseEntity<String >(ex.getMessage(),HttpStatus.CONFLICT);
-//        }
+            responseEntity=new ResponseEntity<String>("Successfully Track Deleted !!", HttpStatus.OK);
+        }catch (TrackNotFoundException ex){
+            responseEntity=new ResponseEntity<String >(ex.getMessage(),HttpStatus.NOT_FOUND);
+        }
         return responseEntity;
     }
     @GetMapping("track")

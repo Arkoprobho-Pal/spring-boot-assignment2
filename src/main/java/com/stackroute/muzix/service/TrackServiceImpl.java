@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Profile("Original")
+@Primary
 @Service
 public class TrackServiceImpl implements TrackService {
 
@@ -72,7 +73,7 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.findAll();
     }
     @Override
-    public Track updateTrackComment(Track track) {
+    public Track updateTrackComment(Track track)throws TrackNotFoundException {
         Track updateTrack=trackRepository.findById(track.getTrackId()).get();
         updateTrack.setComments(track.getComments());
         trackRepository.save(updateTrack);
