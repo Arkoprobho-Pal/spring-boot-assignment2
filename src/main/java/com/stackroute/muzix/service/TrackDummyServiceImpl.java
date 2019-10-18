@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Profile("Dummy")
-@Primary//Qualifier has more preference
 @Service
 public class TrackDummyServiceImpl implements TrackService {
     private TrackRepository trackRepository;

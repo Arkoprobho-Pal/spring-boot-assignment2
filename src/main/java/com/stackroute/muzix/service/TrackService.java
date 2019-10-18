@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TrackService {
     public Track saveTrack(Track track) throws TrackAlreadyExistsException;
-    public Track updateTrackComment(Track track);
+    public Track updateTrackComment(Track track) throws TrackNotFoundException;
     public Track removeTrack(Track track) throws TrackNotFoundException;
     public Iterable<Track> getAllTrackDetails();
     public  List<Track> getTrackByName(String trackName) throws TrackNotFoundException;
