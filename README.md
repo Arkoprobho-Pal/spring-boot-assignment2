@@ -2,8 +2,8 @@
 
 Assignment 2 of Spring boot , Which is done using MongoDB 
 ##terminal Commands for mongo DB here
-```
 ###TO start Mongo Db
+```
 mongo
 ```
 ###TO check the database Here
